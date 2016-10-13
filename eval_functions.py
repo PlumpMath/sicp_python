@@ -111,4 +111,5 @@ def eval_else(exp):
 # for shorter lines of code.
 eval_function_dict = {'PLUS': eval_plus, 'MINUS': eval_minus, 'DIVIDE': eval_divide, 'TIMES': eval_times,
                       'IF': eval_if, 'BIGGERTHAN': eval_bigger_than, 'SMALLERTHAN': eval_smaller_than,
-                      'EQUALTO': eval_equal_to, 'DEFINE': eval_define, 'AND': eval_and, 'COND': eval_cond}
+                      'EQUALTO': eval_equal_to, 'DEFINE': eval_define, 'AND': eval_and, 'COND': eval_cond,
+                      'ELSE': eval_else}

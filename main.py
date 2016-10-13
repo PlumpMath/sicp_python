@@ -14,7 +14,7 @@ lexer          imports    ply.lex        (for parsing)
 """
 from eval_functions import evaluate
 from tokken import string_to_tokens
-from tests import excercise1_1
+from tests import *
 
 
 def run():
@@ -23,4 +23,6 @@ def run():
     print(result)
 
 if __name__ == "__main__":
-    excercise1_1()
+    exercise1_1()
+    exercise1_2()
+    exercise1_3()
