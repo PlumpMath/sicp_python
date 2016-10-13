@@ -13,5 +13,7 @@ Racket, scheme 이 싫어서 파이썬으로 하고 있습니다.
 ## Progress  
 ### Chapter 1
 - [x] Exercise 1.1  
-- [ ] Exercise 1.2  
-- [ ] Exercise 1.3  
+- [x] Exercise 1.2  (no coding needed)
+- [x] Exercise 1.3
+- [ ] Exercise 1.4
+- [ ] Exercise 1.5
