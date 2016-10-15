@@ -18,11 +18,13 @@ from tests import *
 
 
 def run():
-    tokens = string_to_tokens()
-    result = evaluate(tokens)
-    print(result)
+    while True:
+        tokens = string_to_tokens()
+        result = evaluate(tokens)
+        print(result)
 
 if __name__ == "__main__":
     exercise1_1()
     exercise1_2()
     exercise1_3()
+    run()

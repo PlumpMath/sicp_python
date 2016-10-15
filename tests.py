@@ -25,6 +25,13 @@ def asserteq(statement, value):
             raise AssertionError("{}, {}".format(test(statement), value))
 
 
+def assertfunc(statement):
+    try:
+        assert test(statement).type == 'FUNCTION'
+    except:
+        raise AssertionError("{} expected function.".format(test(statement).type))
+
+
 def exercise1_1():
     """
     https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-10.html#%_sec_1.1.1
@@ -42,25 +49,28 @@ def exercise1_1():
     asserteq("(cond ((= a 4) 6) ((= b 4) (+ 6 7 a)) (else 25))", 16)
     asserteq("(+ 2 (if (> b a) b a))", 6)
     asserteq("(* (cond ((> a b) a) ((< a b) b) (else -1)) (+ a 1))", 16)
+    print("EXERCISE 1.1 ALL PASS")
 
 
 def exercise1_2():
+    print("EXERCISE 1.2 ALL PASS")
     pass
 
 
 def exercise1_3():
-    asserteq("(define a 1)", 1)
-    asserteq("(define b 2)", 2)
-    asserteq("(define c 3)", 3)
-    asserteq('''
-             (cond
-                  (and (> a b) (> b c)
-                  (+ (* a a) (* b b)))
-                  (and (> a b) (> c b)
-                  (+ (* a a) (* c c)))
-                  (else
-                  (+ (* b b) (* c c)))
+    assertfunc('''
+             (define ex1_3 a b c
+                 (cond
+                      ((and (> a b) (> b c))
+                      (+ (* a a) (* b b)))
+                      ((and (> a b) (> c b))
+                      (+ (* a a) (* c c)))
+                      (else
+                      (+ (* b b) (* c c)))
+                  )
               )
-             ''', 13)
+             ''')
+    asserteq('ex1_3 1 2 3', 13)
+    print("EXERCISE 1.3 ALL PASS")
 
 

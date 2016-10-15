@@ -20,6 +20,8 @@ class Token(object):
             self.value = value
 
     def __repr__(self):
+        if self.type == 'FUNCTION':
+            return 'function'
         return "Token: {} '{}'".format(self.type, self.value)
 
     def __bool__(self):
@@ -38,7 +40,7 @@ def string_to_tokens(data=None):
     tokens = []
     while True:
         if data is None:
-            data = input(">")
+            data = input("> ")
         lexer.input(data)
         while True:
             tok = lexer.token()
