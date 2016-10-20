@@ -74,3 +74,12 @@ def exercise1_3():
     print("EXERCISE 1.3 ALL PASS")
 
 
+def exercise1_4():
+    assertfunc('''
+                (define a_plus_abs_b a b
+                        ((if (> b 0) + -) a b))
+               ''')
+    asserteq('a_plus_abs_b 3 5', 8)
+    print("EXERCISE 1.4 ALL PASS")
+
+

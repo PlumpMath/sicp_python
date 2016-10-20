@@ -8,7 +8,7 @@ class Token(object):
     and this is real token. The file is named tokken.py because
     there is native library named token.
     '''
-    def __init__(self, LexToken=None, type=None, value=None):
+    def __init__(self, LexToken=None, type=None, value=None, key=None):
         if LexToken is not None:
             self.type = LexToken.type
             self.value = LexToken.value
@@ -18,11 +18,15 @@ class Token(object):
             raise BaseException("Tokens init exception")
         if value is not None:
             self.value = value
+        if key is not None:
+            self.key = key
 
     def __repr__(self):
         if self.type == 'FUNCTION':
-            return 'function'
-        return "Token: {} '{}'".format(self.type, self.value)
+            return "FUNCTION: {}".format(self.key)
+        elif self.type == 'PACKAGE':
+            return "{}".format(self.value)
+        return "{} {}".format(self.type, self.value)
 
     def __bool__(self):
         if self.value == True or self.value == False:
@@ -40,7 +44,10 @@ def string_to_tokens(data=None):
     tokens = []
     while True:
         if data is None:
-            data = input("> ")
+            data = input(">> ")
+        if len(data) == 0:
+            data = None
+            continue
         lexer.input(data)
         while True:
             tok = lexer.token()
@@ -81,6 +88,8 @@ def pack(tokens):
             break
 
     if lparen_index is None:
+        if len(tokens) == 1:
+            return tokens[0]
         return tokens
 
     # search for matching rparen

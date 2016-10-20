@@ -13,7 +13,7 @@ def get_lexer():
               'DIVIDE', 'LPAREN', 'RPAREN', 'NAME',
               'DEFINE', 'PACKAGE', 'BIGGERTHAN',
               'SMALLERTHAN', 'EQUALTO', 'IF', 'AND',
-              'COND', 'ELSE')
+              'COND', 'ELSE', 'MODULUS', 'OR')
 
     # Regular expression rules for simple tokens
     t_PLUS = r'\+'
@@ -54,6 +54,10 @@ def get_lexer():
 
     def t_ELSE(t):
         r'ELSE|else'
+        return t
+
+    def t_OR(t):
+        r'OR|or'
         return t
 
     # Define a rule so we can track line numbers

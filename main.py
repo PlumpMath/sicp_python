@@ -12,19 +12,47 @@ tests          imports    pretty much same as main
 
 lexer          imports    ply.lex        (for parsing)
 """
-from eval_functions import evaluate
-from tokken import string_to_tokens
 from tests import *
+from eval_functions import EvalException, evaluate
+from builtin_functions import load_builtins
+from log import log
+from memory import memory
 
 
 def run():
+    global log
     while True:
-        tokens = string_to_tokens()
-        result = evaluate(tokens)
-        print(result)
+        log.line_no = 0
+        log.enable["PACKAGE"] = False
+        log.enable["NAME"] = False
+        log.enable["NUMBER"] = False
+        try:
+            tokens = string_to_tokens()
+            result = evaluate(tokens)
+            print("output: {}".format(result))
+        except KeyboardInterrupt:
+            print('Keyboard Interrupt detected. Bye!')
+            exit()
+        except EvalException as e:
+            log.e("ERROR! {}".format(e.message))
+            continue
+        except AttributeError as e:
+            log.e("ERROR! {}".format(e))
+            continue
+        except KeyError as e:
+            print(e)
+            continue
+        except Exception as e:
+            log.f(str(e))
+            continue
 
 if __name__ == "__main__":
+    log.set(0)
     exercise1_1()
     exercise1_2()
     exercise1_3()
+    exercise1_4()
+    memory.clean()
+    load_builtins()
+    log.set(5)
     run()
