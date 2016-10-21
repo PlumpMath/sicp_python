@@ -53,7 +53,9 @@ def string_to_tokens(data=None):
             tok = lexer.token()
             if not tok:
                 my_token = lexer_token_to_token(tokens)
-                return pack(my_token)
+                packed = pack(my_token)
+                splitted = split_lines(packed)
+                return splitted
             tokens.append(tok)
 
 
@@ -102,7 +104,32 @@ def pack(tokens):
     package = Token(type='PACKAGE', value=tokens[lparen_index + 1:rparen_index])
     if len(package.value) == 1:
         package = package.value[0]
-    for i in range(rparen_index + 1 - lparen_index):
-        tokens.pop(lparen_index)
+    try:
+        for i in range(rparen_index + 1 - lparen_index):
+            tokens.pop(lparen_index)
+    except IndexError as e:
+        raise IndexError("Wrong parentheses: {}".format(tokens))
     tokens.insert(lparen_index, package)
     return pack(tokens)
+
+
+def split_lines(tokens):
+    try:
+        result = []
+        temp = []
+        for token in tokens:
+            if token.type == 'END':
+                result.append(temp)
+                temp = []
+            else:
+                temp.append(token)
+
+        if temp:
+            result.append(temp)
+
+        return result
+
+    except TypeError as e:
+        # not iterable
+        return [tokens]
+

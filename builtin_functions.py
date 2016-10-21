@@ -10,6 +10,7 @@ def load_builtins():
     add_remainder()
     add_gcd()
     add_make_rat()
+    add_abs()
 
 
 def add_remainder():
@@ -38,16 +39,29 @@ def add_gcd():
     print("gcd added")
 
 
+def add_abs():
+    exp = string_to_tokens('''
+    (define abs a
+        {if (> a 0)
+            a
+            (-a)
+        }
+    )
+    ''')
+    evaluate(exp)
+
+
 def add_make_rat():
     exp = string_to_tokens('''
     (define make_rat n d
-        if (> d 0)
-            (
+        { if (> (* n d) 0
+            {
                 ((/ n (gcd n d)) (/ d (gcd n d)))
-            )
-            (
+            }
+            {
                 ((/ n (gcd n d)) (/ d (gcd n d)))
-            )
+            }
+        }
     )
     ''')
     evaluate(exp)

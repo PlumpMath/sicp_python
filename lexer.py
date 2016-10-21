@@ -13,24 +13,24 @@ def get_lexer():
               'DIVIDE', 'LPAREN', 'RPAREN', 'NAME',
               'DEFINE', 'PACKAGE', 'BIGGERTHAN',
               'SMALLERTHAN', 'EQUALTO', 'IF', 'AND',
-              'COND', 'ELSE', 'MODULUS', 'OR')
+              'COND', 'ELSE', 'MODULUS', 'OR', 'END')
 
     # Regular expression rules for simple tokens
     t_PLUS = r'\+'
     t_MINUS = r'-'
     t_TIMES = r'\*'
     t_DIVIDE = r'/'
-    t_LPAREN = r'\('
-    t_RPAREN = r'\)'
+    t_LPAREN = r'\(|{'
+    t_RPAREN = r'\)|}'
     t_BIGGERTHAN = r'>'
     t_SMALLERTHAN = r'<'
     t_EQUALTO = r'='
     t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
+    t_END = r';'
 
-    # A regular expression rule with some action code
     def t_NUMBER(t):
-        r'\d+'
-        t.value = int(t.value)
+        r'-?\d+(\.\d+)?'
+        t.value = float(t.value)
         return t
 
     # REGEX for reserved word DEFINE.

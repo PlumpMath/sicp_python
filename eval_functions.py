@@ -18,7 +18,6 @@ def evaluate(exp):
     global memory, eval_function_dict, log
 
     eval_log(exp)
-    # log.indent += 1
     log.do_indent(exp)
     result = None
     if isinstance(exp, Token):
@@ -49,7 +48,6 @@ def evaluate(exp):
         elif reduce(lambda x, y:  x or isinstance(y, Token), exp):
             result = list(map(lambda x: evaluate(x) if isinstance(x, Token) else x, exp))
 
-
     if result is None:
         result = exp
 
@@ -75,9 +73,12 @@ def eval_plus(exp):
 
 
 def eval_minus(exp):
-    res = evaluate(exp[1])
-    for item in exp[2:]:
-        res -= evaluate(item)
+    if len(exp) == 2:
+        res = -evaluate(exp[1])
+    else:
+        res = evaluate(exp[1])
+        for item in exp[2:]:
+            res -= evaluate(item)
     return res
 
 

@@ -17,18 +17,22 @@ from eval_functions import EvalException, evaluate
 from builtin_functions import load_builtins
 from log import log
 from memory import memory
+import sys
+import traceback
 
 
 def run():
     global log
     while True:
-        log.line_no = 0
         log.enable["PACKAGE"] = False
         log.enable["NAME"] = False
         log.enable["NUMBER"] = False
         try:
             tokens = string_to_tokens()
-            result = evaluate(tokens)
+            for line in tokens:
+                log.line_no = 0
+                result = evaluate(line)
+                print("--")
             print("output: {}".format(result))
         except KeyboardInterrupt:
             print('Keyboard Interrupt detected. Bye!')
@@ -42,8 +46,13 @@ def run():
         except KeyError as e:
             print(e)
             continue
+        except IndexError as e:
+            print(e)
+            traceback.print_exc()
+            continue
         except Exception as e:
-            log.f(str(e))
+            # traceback.print_exc()
+            print(e)
             continue
 
 if __name__ == "__main__":
@@ -54,5 +63,5 @@ if __name__ == "__main__":
     exercise1_4()
     memory.clean()
     load_builtins()
-    log.set(5)
+    log.set(10)
     run()
