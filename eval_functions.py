@@ -37,7 +37,20 @@ def evaluate(exp):
         elif exp.type == 'ELSE':
             result = Token(type='BOOLEAN', value=True)
     elif isinstance(exp, list):
-        if isinstance(exp[0], Token) and exp[0].type in eval_function_dict:
+        if reduce(lambda x, y: (is_token_of_type(y, 'END')) or x, [False] + exp):
+            temp = []
+            lines = []
+            for item in exp:
+                if is_token_of_type(item, 'END'):
+                    lines.append(temp)
+                    temp = []
+                else:
+                    temp.append(item)
+
+            for line in lines:
+                result = evaluate(line)
+
+        elif isinstance(exp[0], Token) and exp[0].type in eval_function_dict:
             result = eval_function_dict[exp[0].type](exp)
         elif len(exp) == 1:
             result = evaluate(exp[0])
@@ -50,6 +63,8 @@ def evaluate(exp):
 
     if result is None:
         result = exp
+    while isinstance(result, list) and len(result) == 1:
+        result = result[0]
 
     log.do_dedent(exp)
     return result
@@ -63,6 +78,12 @@ class EvalException(Exception):
 def req_params(exp, number):
     if len(exp) != number:
         raise EvalException("Wrong number of arguments {}".format(number))
+
+
+def is_token_of_type(exp, type_name):
+    if isinstance(exp, Token) and exp.type == type_name:
+        return True
+    return False
 
 
 def eval_plus(exp):

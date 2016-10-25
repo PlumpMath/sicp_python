@@ -56,6 +56,7 @@ def string_to_tokens(data=None):
                 packed = pack(my_token)
                 splitted = split_lines(packed)
                 return splitted
+                # return packed
             tokens.append(tok)
 
 

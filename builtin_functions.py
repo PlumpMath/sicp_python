@@ -13,6 +13,7 @@ def load_builtins():
     add_abs()
 
 
+
 def add_remainder():
     exp = string_to_tokens('''
     (define remainder a b
@@ -51,18 +52,38 @@ def add_abs():
     evaluate(exp)
 
 
+# def add_make_rat():
+#     exp = string_to_tokens('''
+#     define make_rat n d
+#         { if (> (* n d) 0)
+#             {
+#                 ((/ n (gcd n d)) (/ d (gcd n d)))
+#             }
+#             {
+#                 ((/ n (gcd n d)) (/ d (gcd n d)))
+#             }
+#         }
+#     ''')
+#     evaluate(exp)
+#     print("make_rat added")
+
+
 def add_make_rat():
     exp = string_to_tokens('''
-    (define make_rat n d
-        { if (> (* n d) 0
-            {
-                ((/ n (gcd n d)) (/ d (gcd n d)))
-            }
-            {
-                ((/ n (gcd n d)) (/ d (gcd n d)))
-            }
+    define make_rat n d
+        {
+            (if (> (* n d) 0)
+                (define flag 1)
+                (define flag -1)
+            );
+
+            (define n (abs n));
+            (define d (abs d));
+
+            (define gcd_result (gcd n d));
+
+            ((*(/ n gcd_result) flag)(/d gcd_result));
         }
-    )
     ''')
     evaluate(exp)
     print("make_rat added")

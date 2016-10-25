@@ -23,11 +23,12 @@ import traceback
 
 def run():
     global log
+    log.enable["PACKAGE"] = False
+    log.enable["NAME"] = False
+    log.enable["NUMBER"] = False
     while True:
-        log.enable["PACKAGE"] = False
-        log.enable["NAME"] = False
-        log.enable["NUMBER"] = False
         try:
+            log.line_no = 0
             tokens = string_to_tokens()
             for line in tokens:
                 log.line_no = 0
